@@ -1,4 +1,4 @@
-package com.royalblood.happy6house.repository;
+package com.royalblood.happy6house.repository.user;
 
 import com.royalblood.happy6house.domain.User;
 import org.springframework.jdbc.datasource.DataSourceUtils;
@@ -119,6 +119,11 @@ public class JdbcUserRepository implements UserRepository {
         } finally {
             close(conn, pstmt, rs);
         }
+    }
+
+    @Override
+    public Optional<User> findByEmail(String email) {
+        return Optional.empty();
     }
 
     private Connection getConnection() {

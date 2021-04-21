@@ -106,4 +106,7 @@ local.properties
 # Spring Boot Tooling
 .sts4-cache/
 
+##
+application-default-oauth.yml
+
 # End of https://www.toptal.com/developers/gitignore/api/eclipse
