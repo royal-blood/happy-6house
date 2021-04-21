@@ -4,7 +4,15 @@
     <div>
         <h1>Hello Spring</h1> <p>회원 기능</p>
         <p>
-            <a href="/users/new">회원 가입</a> <a href="/users">회원 목록</a>
-        </p> </div>
+        <td th:if="${userName == null}" >
+            <a href="/users/new">회원 가입</a>
+            <a href="/oauth2/authorization/google">Google Login</a>
+        </td>
+        <td th:unless="${userName == null}" >
+            <a href="/logout">로그아웃</a>
+        </td>
+        <a href="/users">회원 목록</a>
+        </p>
+    </div>
 </div> <!-- /container --> </body>
 </html>
