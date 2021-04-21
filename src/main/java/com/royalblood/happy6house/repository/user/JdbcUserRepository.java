@@ -121,6 +121,11 @@ public class JdbcUserRepository implements UserRepository {
         }
     }
 
+    @Override
+    public Optional<User> findByEmail(String email) {
+        return Optional.empty();
+    }
+
     private Connection getConnection() {
         return DataSourceUtils.getConnection(dataSource);
     }
