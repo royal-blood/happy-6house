@@ -1,8 +1,12 @@
 spring:
   datasource:
-    driverClassName: com.mysql.cj.jdbc.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver
     url: ${CLEARDB_DATABASE_URL}
   jpa:
     show-sql: true
     hibernate:
       ddl-auto: none
+
+  config:
+    import:
+      application-prod-oauth.yml
