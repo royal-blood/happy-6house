@@ -1,4 +1,4 @@
-package com.royalblood.happy6house.repository;
+package com.royalblood.happy6house.repository.user;
 
 import com.royalblood.happy6house.domain.User;
 import org.springframework.jdbc.datasource.DataSourceUtils;

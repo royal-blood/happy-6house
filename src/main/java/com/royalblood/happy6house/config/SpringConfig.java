@@ -1,6 +1,6 @@
-package com.royalblood.happy6house;
+package com.royalblood.happy6house.config;
 
-import com.royalblood.happy6house.repository.UserRepository;
+import com.royalblood.happy6house.repository.user.UserRepository;
 import com.royalblood.happy6house.service.UserService;
 import com.royalblood.happy6house.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;

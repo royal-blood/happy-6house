@@ -1,7 +1,7 @@
 package com.royalblood.happy6house.service;
 
 import com.royalblood.happy6house.domain.User;
-import com.royalblood.happy6house.repository.UserRepository;
+import com.royalblood.happy6house.repository.user.UserRepository;
 
 import java.util.List;
 import java.util.Optional;
