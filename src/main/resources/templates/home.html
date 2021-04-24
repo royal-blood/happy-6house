@@ -2,17 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org"> <body>
 <div class="container">
     <div>
-        <h1>Hello Spring</h1> <p>회원 기능</p>
-        <p>
-        <td th:if="${userName == null}" >
-            <a href="/users/new">회원 가입</a>
-            <a href="/oauth2/authorization/google">Google Login</a>
-        </td>
-        <td th:unless="${userName == null}" >
-            <a href="/logout">로그아웃</a>
-        </td>
-        <a href="/users">회원 목록</a>
-        </p>
+        <h1>Hello Spring</h1>
     </div>
 </div> <!-- /container --> </body>
 </html>
