@@ -9,6 +9,9 @@ spring:
     hibernate:
       ddl-auto: update
 
-  config:
-    import:
-      application-default-oauth.yml
+jwt:
+  secret: hellohellohellohellohellohello
+  expirationMs: 3600000
+  refreshExpirationMs: 86400000
+#  expirationMs: 60000 # for test
+#  refreshExpirationMs: 120000 # for test
