@@ -10,7 +10,7 @@ import com.royalblood.happy6house.service.dto.UserUpdateDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -18,13 +18,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-//@RequiredArgsConstructor
 public class JwtUserDetailsService implements UserDetailsService {
 
-    @Autowired private final UserRepository userRepository;
-    public JwtUserDetailsService(UserRepository userRepository) {
-            this.userRepository = userRepository;
-    }
+    @Autowired private UserRepository userRepository;
+    @Autowired private PasswordEncoder passwordEncoder;
 
     /**
      * Spring Security 필수 메소드 구현
@@ -47,10 +44,9 @@ public class JwtUserDetailsService implements UserDetailsService {
      */
     @Transactional
     public Long join(UserCreateDto createDto) {
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         validateDuplicateMember(createDto);
 
-        String encrypted = encoder.encode(createDto.getPassword());
+        String encrypted = passwordEncoder.encode(createDto.getPassword());
         createDto.setPassword(encrypted);
         createDto.setAuth("ROLE_USER");
 
