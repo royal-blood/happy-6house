@@ -1,6 +1,7 @@
 package com.royalblood.happy6house.service;
 
 
+import com.royalblood.happy6house.domain.Role;
 import com.royalblood.happy6house.domain.User;
 import com.royalblood.happy6house.exception.NotFoundException;
 import com.royalblood.happy6house.repository.user.UserRepository;
@@ -16,6 +17,8 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static com.royalblood.happy6house.domain.Role.*;
 
 @Service
 public class JwtUserDetailsService implements UserDetailsService {
@@ -48,7 +51,7 @@ public class JwtUserDetailsService implements UserDetailsService {
 
         String encrypted = passwordEncoder.encode(createDto.getPassword());
         createDto.setPassword(encrypted);
-        createDto.setAuth("ROLE_USER");
+        createDto.setAuth(ROLE_USER.getText());
 
         return userRepository.save(createDto.toEntity())
                 .getId();
