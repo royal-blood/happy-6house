@@ -16,12 +16,12 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @CrossOrigin
 public class UserController {
-    private final JwtUserDetailsService userService;
+    private final JwtUserDetailsService jwtUserDetailsService;
 
     @PostMapping("/users")
     public ResponseEntity<?> signUp(@RequestBody UserCreateParam create) {
         try {
-            Long id = userService.join(create.toDto());
+            Long id = jwtUserDetailsService.join(create.toDto());
         } catch (IllegalStateException e) {
             return ResponseEntity.ok(new MessageResponse(e.getMessage()));
         }
@@ -30,12 +30,12 @@ public class UserController {
 
     @GetMapping("/users")
     public ResponseEntity<?> findAll() {
-        return ResponseEntity.ok(userService.findUsers());
+        return ResponseEntity.ok(jwtUserDetailsService.findUsers());
     }
 
     @GetMapping("/users/{id}")
     public ResponseEntity<?> findById(@PathVariable("id") Long id) {
-        return ResponseEntity.ok(userService.findById(id));
+        return ResponseEntity.ok(jwtUserDetailsService.findById(id));
     }
 
     @PutMapping("/users/{id}")
@@ -46,7 +46,7 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                 .body(new MessageResponse("unauthorized"));
 
-        return ResponseEntity.ok(userService.update(id, update.toDto()));
+        return ResponseEntity.ok(jwtUserDetailsService.update(id, update.toDto()));
     }
 
     @DeleteMapping("/users/{id}")
@@ -56,7 +56,7 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                     .body(new MessageResponse("unauthorized"));
 
-        userService.delete(id);
+        jwtUserDetailsService.delete(id);
         return ResponseEntity.ok(new MessageResponse("deleted"));
     }
 }
