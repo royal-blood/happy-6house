@@ -36,6 +36,7 @@ dependencies {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
     }
     compile('org.springframework.boot:spring-boot-starter-oauth2-client')
+    testCompile('org.springframework.security:spring-security-test')
 }
 
 test {

@@ -1,6 +1,5 @@
 package com.royalblood.happy6house.service;
 
-import com.royalblood.happy6house.domain.Role;
 import com.royalblood.happy6house.exception.NotFoundException;
 import com.royalblood.happy6house.service.dto.UserCreateDto;
 import com.royalblood.happy6house.service.dto.UserDto;
