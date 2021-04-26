@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.royalblood.happy6house.domain.Role.*;
+import static java.util.Objects.requireNonNull;
 
 @Service
 public class JwtUserDetailsService implements UserDetailsService {
@@ -47,7 +48,9 @@ public class JwtUserDetailsService implements UserDetailsService {
      */
     @Transactional
     public Long join(UserCreateDto createDto) {
-        validateDuplicateMember(createDto);
+        requireNonNull(createDto.getEmail());
+
+        validateDuplicateUser(createDto);
 
         String encrypted = passwordEncoder.encode(createDto.getPassword());
         createDto.setPassword(encrypted);
@@ -57,7 +60,7 @@ public class JwtUserDetailsService implements UserDetailsService {
                 .getId();
     }
 
-    private void validateDuplicateMember(UserCreateDto create) {
+    private void validateDuplicateUser(UserCreateDto create) {
         userRepository.findByEmail(create.getEmail())
                 .ifPresent(m -> {
                     throw new IllegalStateException("이미 존재하는 회원입니다.");
