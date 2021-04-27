@@ -1,15 +1,22 @@
 package com.royalblood.happy6house.domain;
 
+import com.royalblood.happy6house.utils.EnumType;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 @Getter
-@RequiredArgsConstructor
-public enum Role {
-    GUEST("ROLE_GUEST", "손님"),
-    USER("ROLE_USER", "일반 사용자");
+public enum  Role implements EnumType {
+    ROLE_USER,
+    ROLE_MODIFIER,
+    ROLE_ADMIN;
 
-    private final String key;
-    private final String title;
+    @Override
+    public String getId() {
+        return this.name();
+    }
+
+    @Override
+    public String getText() {
+        return this.name();
+    }
 }
-

@@ -5,8 +5,9 @@ spring:
   jpa:
     show-sql: true
     hibernate:
-      ddl-auto: none
+      ddl-auto: update
 
-  config:
-    import:
-      application-prod-oauth.yml
+jwt:
+  secret: ${JWT_SECRET}
+  expirationMs: 3600000
+  refreshExpirationMs: 86400000

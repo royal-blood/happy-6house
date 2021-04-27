@@ -19,6 +19,11 @@ repositories {
 }
 
 dependencies {
+    // https://mvnrepository.com/artifact/javax.validation/validation-api
+    implementation group: 'javax.validation', name: 'validation-api', version: '2.0.1.Final'
+
+    // https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt
+    implementation group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 //    implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
@@ -31,6 +36,7 @@ dependencies {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
     }
     compile('org.springframework.boot:spring-boot-starter-oauth2-client')
+    testCompile('org.springframework.security:spring-security-test')
 }
 
 test {

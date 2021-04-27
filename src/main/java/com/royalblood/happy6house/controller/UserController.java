@@ -1,45 +1,62 @@
 package com.royalblood.happy6house.controller;
 
-import com.royalblood.happy6house.controller.dto.UserForm;
+import com.royalblood.happy6house.param.UserCreateParam;
+import com.royalblood.happy6house.param.UserUpdateParam;
 import com.royalblood.happy6house.domain.User;
-import com.royalblood.happy6house.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import com.royalblood.happy6house.response.MessageResponse;
+import com.royalblood.happy6house.service.JwtUserDetailsService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
-@Controller
+@RequestMapping("/api")
+@RestController
+@RequiredArgsConstructor
+@CrossOrigin
 public class UserController {
-    private final UserService userService;
+    private final JwtUserDetailsService jwtUserDetailsService;
 
-    @Autowired
-    public UserController(UserService userService) {
-        this.userService = userService;
+    @PostMapping("/users")
+    public ResponseEntity<?> signUp(@RequestBody UserCreateParam create) {
+        try {
+            Long id = jwtUserDetailsService.join(create.toDto());
+        } catch (IllegalStateException e) {
+            return ResponseEntity.ok(new MessageResponse(e.getMessage()));
+        }
+        return ResponseEntity.ok(new MessageResponse("OK"));
     }
 
-    @GetMapping(value = "/users/new")
-    public String createForm() {
-        return "users/createUserForm";
+    @GetMapping("/users")
+    public ResponseEntity<?> findAll() {
+        return ResponseEntity.ok(jwtUserDetailsService.findUsers());
     }
 
-    @PostMapping(value = "/users/new")
-    public String create(UserForm form) {
-        User user = new User();
-        user.setName(form.getName());
-        user.setNickname(form.getNickname());
-
-        userService.join(user);
-
-        return "redirect:/";
+    @GetMapping("/users/{id}")
+    public ResponseEntity<?> findById(@PathVariable("id") Long id) {
+        return ResponseEntity.ok(jwtUserDetailsService.findById(id));
     }
 
-    @GetMapping(value = "/users")
-    public String list(Model model) {
-        List<User> users = userService.findUsers();
-        model.addAttribute("users", users);
-        return "users/userList";
+    @PutMapping("/users/{id}")
+    public ResponseEntity<?> update(@PathVariable("id") Long id,
+                                          @RequestBody UserUpdateParam update,
+                                          @AuthenticationPrincipal User user) {
+        if (!user.getId().equals(id))
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                .body(new MessageResponse("unauthorized"));
+
+        return ResponseEntity.ok(jwtUserDetailsService.update(id, update.toDto()));
+    }
+
+    @DeleteMapping("/users/{id}")
+    public ResponseEntity<?> delete(@PathVariable("id") Long id,
+                                         @AuthenticationPrincipal User user) {
+        if (!user.getId().equals(id))
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(new MessageResponse("unauthorized"));
+
+        jwtUserDetailsService.delete(id);
+        return ResponseEntity.ok(new MessageResponse("deleted"));
     }
 }
