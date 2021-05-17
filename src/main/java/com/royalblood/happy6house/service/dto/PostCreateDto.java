@@ -7,8 +7,6 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 
-//@Getter
-//@Setter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class PostCreateDto {
     private String title;
