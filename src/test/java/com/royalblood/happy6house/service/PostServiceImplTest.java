@@ -5,17 +5,28 @@ import com.royalblood.happy6house.domain.PostCategory;
 import com.royalblood.happy6house.domain.User;
 import com.royalblood.happy6house.repository.post.PostRepository;
 import com.royalblood.happy6house.service.dto.PostCreateDto;
+import com.royalblood.happy6house.service.dto.PostDto;
+import com.royalblood.happy6house.service.dto.UserDto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Pageable;
+import org.springframework.test.util.ReflectionTestUtils;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import static com.royalblood.happy6house.domain.Role.ROLE_USER;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.willReturn;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class PostServiceImplTest {
@@ -51,5 +62,63 @@ class PostServiceImplTest {
 
         // then
         assertThat(saveId).isSameAs(createdPost.getId());
+    }
+
+    @DisplayName("id에 해당하는 게시글 DTO를 반환하면 성공")
+    @Test
+    void id로_게시글_조회() {
+        // given
+        final Post post = Post.builder()
+                .title("This is Title")
+                .content("This is content")
+                .category(PostCategory.GENERAL)
+                .user(mock(User.class))
+                .build();
+
+        Long postId = 10L;
+        ReflectionTestUtils.setField(post, "id", postId);
+
+        given(postRepository.findById(postId)).willReturn(Optional.of(post));
+
+        // when
+        PostDto postDto = postService.findById(postId);
+
+        // then
+        verify(postRepository).findById(any(Long.class));
+        assertThat(postId).isSameAs(postDto.getId());
+    }
+
+    @DisplayName("general category에 해당하고 주어진 limit과 offset에 의해 올바른 수의 게시글 DTO list를 반환하면 성공")
+    @Test
+    void general_category로_게시글_조회() {
+        // given
+        int totalGeneralPostsSize = 10;
+        List<Post> posts = new ArrayList<>();
+        for (long i = 1; i <= totalGeneralPostsSize; i++) {
+            Post post = Post.builder()
+                    .title("title")
+                    .content("content")
+                    .category(PostCategory.GENERAL)
+                    .user(mock(User.class))
+                    .build();
+            ReflectionTestUtils.setField(post, "id", i);
+            ReflectionTestUtils.setField(post, "createdDate", LocalDateTime.now());
+            ReflectionTestUtils.setField(post, "modifiedDate", LocalDateTime.now());
+            posts.add(post);
+        }
+        long offset = 0;
+        int limit = 10;
+
+//        Collections.sort(posts, (a, b)-> b.getCreatedDate().compareTo(a.getCreatedDate()));
+        posts.sort(Comparator.comparing(Post::getCreatedDate).reversed());
+        willReturn(posts).
+                given(postRepository).findByCategory(any(PostCategory.class), any(Pageable.class));
+
+        // when
+        List<PostDto> postDtoList = postService.findByCategory(PostCategory.GENERAL, offset, limit);
+
+        // then
+        verify(postRepository).findByCategory(any(PostCategory.class), any(Pageable.class));
+        assertThat(postDtoList.size()).isSameAs(totalGeneralPostsSize);
     }
 }
