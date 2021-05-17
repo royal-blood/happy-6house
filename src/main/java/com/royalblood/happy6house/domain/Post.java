@@ -14,7 +14,7 @@ public class Post extends BaseTimeEntity {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(length = 450, nullable = false)
+    @Column(length = 450)
     private String title;
 
     @Column(columnDefinition = "TEXT", nullable = false)
