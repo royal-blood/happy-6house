@@ -6,6 +6,7 @@ import com.royalblood.happy6house.domain.User;
 import com.royalblood.happy6house.repository.post.PostRepository;
 import com.royalblood.happy6house.service.dto.PostCreateDto;
 import com.royalblood.happy6house.service.dto.PostDto;
+import com.royalblood.happy6house.service.dto.PostUpdateDto;
 import com.royalblood.happy6house.service.dto.UserDto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -120,5 +121,42 @@ class PostServiceImplTest {
         // then
         verify(postRepository).findByCategory(any(PostCategory.class), any(Pageable.class));
         assertThat(postDtoList.size()).isSameAs(totalGeneralPostsSize);
+    }
+
+    @DisplayName("게시글이 수정되면 성공")
+    @Test
+    void 게시글_수정() {
+        // given
+        final User user = User.builder()
+                .email("hi@hi.com").name("hello")
+                .password("hi").auth(ROLE_USER.getText())
+                .build();
+        Long userId = 20L;
+        user.setId(userId);
+
+        final Post post = Post.builder()
+                .title("This is Title")
+                .content("This is content")
+                .category(PostCategory.GENERAL)
+                .user(user)
+                .build();
+        Long postId = 10L;
+        ReflectionTestUtils.setField(post, "id", postId);
+
+        String newTitle = "It's new Title";
+        String newContent = "It's new content";
+        PostUpdateDto updateDto = PostUpdateDto.builder()
+                .title(newTitle).content(newContent)
+                .build();
+
+        willReturn(Optional.of(post)).given(postRepository).findById(postId);
+
+        // when
+        PostDto updatedPostDto = postService.update(userId, postId, updateDto);
+
+        // then
+        verify(postRepository).findById(any(Long.class));
+        assertThat(updatedPostDto.getTitle()).isSameAs(newTitle);
+        assertThat(updatedPostDto.getContent()).isSameAs(newContent);
     }
 }

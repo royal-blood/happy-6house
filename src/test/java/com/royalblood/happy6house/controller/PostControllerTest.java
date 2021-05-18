@@ -169,11 +169,9 @@ class PostControllerTest {
         // when
         mockMvc.perform(get("/api/posts")
                 .with(user(principal))
-//                .params(paramMap)
                 .queryParam("category", PostCategory.GENERAL.name().toLowerCase())
                 .queryParam("offset", Long.toString(offset))
                 .queryParam("limit", Integer.toString(limit))
-//                .content(mapper.writeValueAsString(paramMap))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(totalGeneralPostsSize));

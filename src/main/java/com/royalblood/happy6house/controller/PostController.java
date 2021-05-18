@@ -6,6 +6,7 @@ import com.royalblood.happy6house.param.PostCreateParam;
 import com.royalblood.happy6house.param.PostUpdateParam;
 import com.royalblood.happy6house.service.PostService;
 import com.royalblood.happy6house.service.dto.PostCreateDto;
+import com.royalblood.happy6house.service.dto.PostUpdateDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -42,6 +43,12 @@ public class PostController {
         return ResponseEntity.ok(postService.findByCategory(category, offset, limit));
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<?> update(@PathVariable("id") Long postId,
+                                    @RequestBody PostUpdateParam update,
+                                    @AuthenticationPrincipal User user) {
+        return ResponseEntity.ok(postService.update(user.getId(), postId, update.toDto()));
+    }
 
 //    @DeleteMapping("/posts/{id}")
 //    public ResponseEntity<?> delete(@PathVariable("id") Long id,
