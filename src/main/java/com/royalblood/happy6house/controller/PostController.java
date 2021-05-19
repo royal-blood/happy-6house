@@ -49,6 +49,10 @@ public class PostController {
     public ResponseEntity<?> update(@PathVariable("id") Long postId,
                                     @RequestBody PostUpdateParam update,
                                     @AuthenticationPrincipal User user) {
+        if (update.getContent() == null)
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(new MessageResponse("bad request"));
+
         return ResponseEntity.ok(postService.update(user.getId(), postId, update.toDto()));
     }
 

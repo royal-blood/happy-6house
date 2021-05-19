@@ -57,6 +57,9 @@ public class PostServiceImpl implements PostService {
         if (!post.getUser().getId().equals(userId))
             throw new RuntimeException("unauthorized");
 
+        if (post.getCategory() != PostCategory.GUESTBOOK && updateDto.getTitle() == null)
+            throw new RuntimeException("bad request");
+
         updateDto.apply(post);
 
         return PostDto.of(post);
