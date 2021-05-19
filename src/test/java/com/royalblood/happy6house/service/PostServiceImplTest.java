@@ -159,4 +159,34 @@ class PostServiceImplTest {
         assertThat(updatedPostDto.getTitle()).isSameAs(newTitle);
         assertThat(updatedPostDto.getContent()).isSameAs(newContent);
     }
+
+    @DisplayName("게시글 DB 삭제가 호출되면 성공")
+    @Test
+    void 게시글_삭제() {
+        // given
+        final User user = User.builder()
+                .email("hi@hi.com").name("hello")
+                .password("hi").auth(ROLE_USER.getText())
+                .build();
+        Long userId = 20L;
+        user.setId(userId);
+
+        final Post post = Post.builder()
+                .title("This is Title")
+                .content("This is content")
+                .category(PostCategory.GENERAL)
+                .user(user)
+                .build();
+        Long postId = 10L;
+        ReflectionTestUtils.setField(post, "id", postId);
+
+        willReturn(Optional.of(post)).given(postRepository).findById(postId);
+
+        // when
+        postService.deleteById(userId, postId);
+
+        // then
+        verify(postRepository).findById(any(Long.class));
+        verify(postRepository).deleteById(any(Long.class));
+    }
 }

@@ -32,8 +32,5 @@ public interface SpringDataJpaPostRepository extends JpaRepository<Post, Long>, 
     @Modifying
     @Override
     @Query("update Post p set p.deleted = true where p.id = :id")
-    void deleteById(Long id);
-
-
-
+    void deleteById(@Param("id") Long id);
 }

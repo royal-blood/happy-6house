@@ -61,4 +61,16 @@ public class PostServiceImpl implements PostService {
 
         return PostDto.of(post);
     }
+
+    @Transactional
+    @Override
+    public void deleteById(Long userId, Long postId) {
+        Post post = postRepository.findById(postId)
+                .orElseThrow(NotFoundException::new);
+
+        if (!post.getUser().getId().equals(userId))
+            throw new RuntimeException("unauthorized");
+
+        postRepository.deleteById(postId);
+    }
 }
