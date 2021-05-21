@@ -77,7 +77,7 @@ class UserControllerTest {
                 .password("hi").picture(null)
                 .auth(ROLE_USER.getText())
                 .build();
-        principal.setId(20L);
+        when(principal.getId()).thenReturn(20L);
 
         Long queryStrUserId = 10L;
 
@@ -99,7 +99,7 @@ class UserControllerTest {
                 .password("hi").picture(null)
                 .auth(ROLE_USER.getText())
                 .build();
-        principal.setId(20L);
+        when(principal.getId()).thenReturn(20L);
 
         Long queryStrUserId = 10L;
 

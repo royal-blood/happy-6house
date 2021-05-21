@@ -11,9 +11,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Getter @Setter
-@NoArgsConstructor
-@AllArgsConstructor
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 //@org.hibernate.annotations.DynamicUpdate
 public class User extends BaseTimeEntity implements UserDetails {
     @Id

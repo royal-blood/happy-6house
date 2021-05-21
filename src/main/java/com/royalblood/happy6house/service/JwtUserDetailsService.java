@@ -1,7 +1,6 @@
 package com.royalblood.happy6house.service;
 
 
-import com.royalblood.happy6house.domain.Role;
 import com.royalblood.happy6house.domain.User;
 import com.royalblood.happy6house.exception.NotFoundException;
 import com.royalblood.happy6house.repository.user.UserRepository;
@@ -79,11 +78,11 @@ public class JwtUserDetailsService implements UserDetailsService {
                 .orElseThrow(NotFoundException::new);
     }
 
-    public void delete(Long id) {
+    public void deleteById(Long id) {
         User user = userRepository.findById(id)
                 .orElseThrow(NotFoundException::new);
 
-        userRepository.delete(id);
+        userRepository.deleteById(id);
     }
 
     @Transactional
