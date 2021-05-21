@@ -17,15 +17,12 @@ public interface SpringDataJpaCommentRepository extends JpaRepository<Comment, L
     Optional<Comment> findById(@Param("id") Long id);
 
     @Override
-    @Query(value = "from Comment c where c.deleted = false and c.user_id = :userId", nativeQuery = true)
     List<Comment> findByUserId(@Param("userId") Long userId);
 
     @Override
-    @Query(value = "from Comment c where c.deleted = false and c.post_id = :postId", nativeQuery = true)
     List<Comment> findByPostId(@Param("postId") Long postId);
 
     @Override
-    @Query(value = "from Comment c where c.deleted = false and c.parent_id = :parentId", nativeQuery = true)
     List<Comment> findByParentId(@Param("parentId") Long parentId);
 
     @Transactional
