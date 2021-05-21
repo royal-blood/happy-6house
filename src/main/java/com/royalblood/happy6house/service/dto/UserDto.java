@@ -1,14 +1,10 @@
 package com.royalblood.happy6house.service.dto;
 
 import com.royalblood.happy6house.domain.User;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
-@Setter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class UserDto {
     private Long id;
     private String email;

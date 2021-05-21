@@ -56,7 +56,7 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                     .body(new MessageResponse("unauthorized"));
 
-        jwtUserDetailsService.delete(id);
+        jwtUserDetailsService.deleteById(id);
         return ResponseEntity.ok(new MessageResponse("deleted"));
     }
 }

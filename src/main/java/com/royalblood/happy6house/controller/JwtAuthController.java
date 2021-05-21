@@ -6,6 +6,7 @@ import com.royalblood.happy6house.domain.User;
 import com.royalblood.happy6house.response.JwtResponse;
 import com.royalblood.happy6house.service.JwtUserDetailsService;
 import com.royalblood.happy6house.security.jwt.JwtTokenUtil;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -21,16 +22,14 @@ import java.util.stream.Collectors;
 @RequestMapping("/api")
 @RestController
 @CrossOrigin
+@RequiredArgsConstructor
 public class JwtAuthController {
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
+    private final AuthenticationManager authenticationManager;
 
-    @Autowired
-    private JwtTokenUtil jwtTokenUtil;
+    private final JwtTokenUtil jwtTokenUtil;
 
-    @Autowired
-    private JwtUserDetailsService userDetailsService;
+    private final JwtUserDetailsService userDetailsService;
 
     @PostMapping(value = "/authenticate")
     public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest)

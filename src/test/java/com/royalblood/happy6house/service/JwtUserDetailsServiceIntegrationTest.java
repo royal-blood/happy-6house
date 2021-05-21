@@ -104,10 +104,9 @@ public class JwtUserDetailsServiceIntegrationTest {
                 .build();
 
         Long saveId = jwtUserDetailsService.join(createDto);
-//        UserDto createdUser = jwtUserDetailsService.findById(saveId);
 
         // when
-        jwtUserDetailsService.delete(saveId);
+        jwtUserDetailsService.deleteById(saveId);
 
         // then
         NotFoundException e = assertThrows(NotFoundException.class,

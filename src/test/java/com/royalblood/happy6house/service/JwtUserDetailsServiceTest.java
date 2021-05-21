@@ -13,6 +13,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.test.util.ReflectionTestUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +42,7 @@ public class JwtUserDetailsServiceTest {
                 .picture(null)
                 .build();
         User createdUser = createDto.toEntity();
-        createdUser.setId(10L);
+        ReflectionTestUtils.setField(createdUser, "id", 10L);
 
         when(userRepository.save(any(User.class))).thenReturn(createdUser);
         when(passwordEncoder.encode(any(String.class))).thenReturn("encrypted");
@@ -143,10 +144,10 @@ public class JwtUserDetailsServiceTest {
 
         Optional<User> userOptional = Optional.of(user);
         when(userRepository.findById(any(Long.class))).thenReturn(userOptional);
-        doNothing().when(userRepository).delete(any(Long.class));
+        doNothing().when(userRepository).deleteById(any(Long.class));
 
         // when
-        jwtUserDetailsService.delete(userId);
+        jwtUserDetailsService.deleteById(userId);
     }
 
     @Test
@@ -158,6 +159,6 @@ public class JwtUserDetailsServiceTest {
 
         // when - then
         NotFoundException e = assertThrows(NotFoundException.class,
-                () -> jwtUserDetailsService.delete(userId));
+                () -> jwtUserDetailsService.deleteById(userId));
     }
 }
