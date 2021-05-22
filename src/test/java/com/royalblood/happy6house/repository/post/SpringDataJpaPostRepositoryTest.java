@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.util.ReflectionTestUtils;
 
 import static com.royalblood.happy6house.domain.Role.ROLE_USER;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -31,7 +32,7 @@ class SpringDataJpaPostRepositoryTest {
                 .email("hi@hi.com").name("hello")
                 .password("hi").auth(ROLE_USER.getText())
                 .build();
-        user.setId(10L);
+        ReflectionTestUtils.setField(user, "id", 10L);
 
         final Post post = Post.builder()
                 .title("This is title")

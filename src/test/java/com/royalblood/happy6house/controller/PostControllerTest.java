@@ -1,7 +1,6 @@
 package com.royalblood.happy6house.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.royalblood.happy6house.domain.Post;
 import com.royalblood.happy6house.domain.PostCategory;
 import com.royalblood.happy6house.domain.User;
 import com.royalblood.happy6house.param.PostCreateParam;
@@ -32,7 +31,8 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -62,7 +62,7 @@ class PostControllerTest {
                 .password("hi").picture(null)
                 .auth(ROLE_USER.getText())
                 .build();
-        principal.setId(userId);
+        ReflectionTestUtils.setField(principal, "id", userId);
 
         Long postId = 100L;
         PostCreateParam createParam = PostCreateParam.builder()
@@ -93,14 +93,14 @@ class PostControllerTest {
                 .password("hi").picture(null)
                 .auth(ROLE_USER.getText())
                 .build();
-        principal.setId(principalId);
+        ReflectionTestUtils.setField(principal, "id", principalId);
 
         Long userId = 10L;
         UserDto userDto = UserDto.builder()
                 .email("hello@hello.com").name("good")
                 .picture(null).auth(ROLE_USER.getText())
                 .build();
-        userDto.setId(userId);
+        ReflectionTestUtils.setField(userDto, "id", userId);
 
         Long postId = 100L;
         PostDto postDto = PostDto.builder()
@@ -137,14 +137,14 @@ class PostControllerTest {
                 .password("hi").picture(null)
                 .auth(ROLE_USER.getText())
                 .build();
-        principal.setId(principalId);
+        ReflectionTestUtils.setField(principal, "id", principalId);
 
         Long userId = 10L;
         UserDto userDto = UserDto.builder()
                 .email("hello@hello.com").name("good")
                 .picture(null).auth(ROLE_USER.getText())
                 .build();
-        userDto.setId(userId);
+        ReflectionTestUtils.setField(userDto, "id", userId);
 
         int totalGeneralPostsSize = 10;
         List<PostDto> postDtoList = new ArrayList<>();
