@@ -16,6 +16,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static com.royalblood.happy6house.domain.Role.ROLE_USER;
@@ -57,8 +58,8 @@ class UserControllerTest {
 
         // when - then
         mockMvc.perform(post("/api/users")
-                    .content(mapper.writeValueAsString(userCreate))
-                    .contentType(MediaType.APPLICATION_JSON))
+                .content(mapper.writeValueAsString(userCreate))
+                .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.message").value("OK"));
     }
@@ -77,7 +78,7 @@ class UserControllerTest {
                 .password("hi").picture(null)
                 .auth(ROLE_USER.getText())
                 .build();
-        when(principal.getId()).thenReturn(20L);
+        ReflectionTestUtils.setField(principal, "id", 20L);
 
         Long queryStrUserId = 10L;
 
@@ -99,7 +100,7 @@ class UserControllerTest {
                 .password("hi").picture(null)
                 .auth(ROLE_USER.getText())
                 .build();
-        when(principal.getId()).thenReturn(20L);
+        ReflectionTestUtils.setField(principal, "id", 20L);
 
         Long queryStrUserId = 10L;
 
