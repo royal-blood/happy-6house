@@ -22,6 +22,6 @@ jobs:
         mysql version: '8.22'
         mysql database: 'class6'
         mysql user: 'ssafy' # Required if "mysql root password" is empty, default is empty. The superuser for the specified database. Of course you can use secrets, too
-        mysql password: ${{ secrets.DatabasePassword }} # Required
+        mysql password: 'ssafy'
     - name: Build with Gradle
       run: ./gradlew clean build
