@@ -19,7 +19,7 @@ jobs:
     - name: Start MySQL
       uses: samin/mysql-action@v1.3
       with:
-        mysql version: '8.22'
+        mysql version: '8.0.22'
         mysql database: 'class6'
         mysql user: 'ssafy' # Required if "mysql root password" is empty, default is empty. The superuser for the specified database. Of course you can use secrets, too
         mysql password: 'ssafy'
