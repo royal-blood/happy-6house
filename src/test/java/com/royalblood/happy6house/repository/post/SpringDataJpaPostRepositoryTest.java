@@ -11,38 +11,40 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.test.util.ReflectionTestUtils;
 
 import static com.royalblood.happy6house.domain.Role.ROLE_USER;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.when;
+import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace.ANY;
 
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@AutoConfigureTestDatabase(replace = ANY) // ANY : in-memory embedded DB(H2), NONE : DB in application.properties
 class SpringDataJpaPostRepositoryTest {
 
-    @Autowired
-    private PostRepository postRepository;
+    @Autowired private PostRepository postRepository;
+    @Autowired private UserRepository userRepository;
 
     @DisplayName("게시글을 저장하고 저장된 게시글의 id가 nulL이 아니면 성공")
     @Test
     public void 게시글_저장() {
+        // given
         final User user = User.builder()
                 .email("hi@hi.com").name("hello")
                 .password("hi").auth(ROLE_USER.getText())
                 .build();
-        ReflectionTestUtils.setField(user, "id", 10L);
+        User savedUser = userRepository.save(user);
 
         final Post post = Post.builder()
                 .title("This is title")
                 .content("This is content")
                 .category(PostCategory.GENERAL)
-                .user(user)
+                .user(savedUser)
                 .build();
 
+        // when
         final Post savePost = postRepository.save(post);
 
+        // then
         assertThat(savePost.getId()).isNotNull();
     }
 }
