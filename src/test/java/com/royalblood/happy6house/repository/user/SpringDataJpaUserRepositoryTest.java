@@ -10,10 +10,12 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import static com.royalblood.happy6house.domain.Role.ROLE_USER;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace.ANY;
+import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace.NONE;
 
 @ExtendWith(SpringExtension.class)
 @DataJpaTest // 내부적으로 @transactional 선언
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@AutoConfigureTestDatabase(replace = NONE)
 class SpringDataJpaUserRepositoryTest {
 
     @Autowired

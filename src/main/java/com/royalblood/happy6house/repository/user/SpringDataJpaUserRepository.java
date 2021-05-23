@@ -27,5 +27,5 @@ public interface SpringDataJpaUserRepository extends JpaRepository<User, Long>, 
     @Modifying
     @Override
     @Query("update User u set u.enabled = false where u.id = :id")
-    void delete(@Param("id") Long id);
+    void deleteById(@Param("id") Long id);
 }

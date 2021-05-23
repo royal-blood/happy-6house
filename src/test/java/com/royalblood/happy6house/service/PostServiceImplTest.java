@@ -44,7 +44,7 @@ class PostServiceImplTest {
                 .email("hi@hi.com").name("hello")
                 .password("hi").auth(ROLE_USER.getText())
                 .build();
-        user.setId(10L);
+        ReflectionTestUtils.setField(user, "id", 10L);
 
         PostCreateDto createDto = PostCreateDto.builder()
                 .title("This is title")
@@ -132,7 +132,7 @@ class PostServiceImplTest {
                 .password("hi").auth(ROLE_USER.getText())
                 .build();
         Long userId = 20L;
-        user.setId(userId);
+        ReflectionTestUtils.setField(user, "id", userId);
 
         final Post post = Post.builder()
                 .title("This is Title")
@@ -169,7 +169,7 @@ class PostServiceImplTest {
                 .password("hi").auth(ROLE_USER.getText())
                 .build();
         Long userId = 20L;
-        user.setId(userId);
+        ReflectionTestUtils.setField(user, "id", userId);
 
         final Post post = Post.builder()
                 .title("This is Title")

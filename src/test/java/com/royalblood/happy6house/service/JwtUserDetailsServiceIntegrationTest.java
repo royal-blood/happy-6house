@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
-import static com.royalblood.happy6house.domain.Role.*;
+import static com.royalblood.happy6house.domain.Role.ROLE_USER;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -104,10 +104,9 @@ public class JwtUserDetailsServiceIntegrationTest {
                 .build();
 
         Long saveId = jwtUserDetailsService.join(createDto);
-//        UserDto createdUser = jwtUserDetailsService.findById(saveId);
 
         // when
-        jwtUserDetailsService.delete(saveId);
+        jwtUserDetailsService.deleteById(saveId);
 
         // then
         NotFoundException e = assertThrows(NotFoundException.class,
