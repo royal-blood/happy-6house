@@ -9,7 +9,7 @@ import java.util.List;
 import static javax.persistence.FetchType.LAZY;
 
 @Entity
-@Getter @Setter
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Comment extends BaseTimeEntity {
@@ -50,6 +50,10 @@ public class Comment extends BaseTimeEntity {
         this.user = user;
         this.post = post;
         this.parent = parent;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public void update(String content) {
