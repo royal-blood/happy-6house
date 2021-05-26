@@ -19,7 +19,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class CommentController {
 
-    @Autowired private final CommentService commentService;
+    private final CommentService commentService;
 
     @GetMapping("/comments/{id}")
     public ResponseEntity<?> findById(@PathVariable Long id) {
