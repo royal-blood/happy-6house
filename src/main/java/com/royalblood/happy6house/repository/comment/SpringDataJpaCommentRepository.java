@@ -28,7 +28,7 @@ public interface SpringDataJpaCommentRepository extends JpaRepository<Comment, L
     @Transactional
     @Modifying
     @Override
-    @Query(value = "update Comment c set c.deleted = true where c.id = :id", nativeQuery = true)
+    @Query(value = "update Comment c set c.deleted = true where c.id = :id")
     void delete(@Param("id") Long id);
 
 }
