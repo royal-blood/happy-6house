@@ -112,7 +112,7 @@ public class CommentControllerTest {
         Long commentId = 11L;
         CommentDto commentDto = CommentDto.builder()
                 .userDto(UserDto.of(user))
-                .postDto(PostDto.of(post))
+                .postId(post.getId())
                 .content("content")
                 .build();
 
@@ -127,7 +127,7 @@ public class CommentControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(commentDto.getId()))
                 .andExpect(jsonPath("$.user.id").value(commentDto.getUserDto().getId()))
-                .andExpect(jsonPath("$.post.id").value(commentDto.getPostDto().getId()));
+                .andExpect(jsonPath("$.post").value(commentDto.getPostId()));
 
         // then
         then(commentService)
@@ -150,7 +150,7 @@ public class CommentControllerTest {
             CommentDto commentDto = CommentDto.builder()
                     .content("content")
                     .userDto(UserDto.of(user))
-                    .postDto(PostDto.of(post))
+                    .postId(post.getId())
                     .build();
 
             comments.add(commentDto);
@@ -186,7 +186,7 @@ public class CommentControllerTest {
             CommentDto commentDto = CommentDto.builder()
                     .content("content")
                     .userDto(UserDto.of(user))
-                    .postDto(PostDto.of(post))
+                    .postId(post.getId())
                     .build();
 
             comments.add(commentDto);
@@ -230,7 +230,7 @@ public class CommentControllerTest {
             CommentDto commentDto = CommentDto.builder()
                     .content("content")
                     .userDto(UserDto.of(user))
-                    .postDto(PostDto.of(post))
+                    .postId(post.getId())
                     .parentId(parentId)
                     .build();
 
@@ -267,7 +267,7 @@ public class CommentControllerTest {
 
         CommentDto commentDto = CommentDto.builder()
                 .userDto(UserDto.of(user))
-                .postDto(PostDto.of(post))
+                .postId(post.getId())
                 .id(commentId)
                 .content("update")
                 .build();

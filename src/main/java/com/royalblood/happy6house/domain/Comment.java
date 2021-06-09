@@ -1,10 +1,9 @@
 package com.royalblood.happy6house.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 import static javax.persistence.FetchType.LAZY;
 
@@ -27,6 +26,7 @@ public class Comment extends BaseTimeEntity {
                 foreignKey = @ForeignKey(name = "FK_COMMENT_USER"))
     private User user;
 
+    @JsonIgnore
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "post_id",
                 nullable = false,
@@ -37,9 +37,6 @@ public class Comment extends BaseTimeEntity {
     @JoinColumn(name = "parent_id",
                 foreignKey = @ForeignKey(name = "FK_COMMENT_PARENT"))
     private Comment parent;
-
-    @OneToMany(mappedBy = "parent", fetch = LAZY)
-    private List<Comment> children = new ArrayList<>();
 
     @Column(nullable = false)
     private boolean deleted = false;

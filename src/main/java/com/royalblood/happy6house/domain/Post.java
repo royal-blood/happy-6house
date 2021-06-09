@@ -4,6 +4,9 @@ import lombok.*;
 
 import javax.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static javax.persistence.FetchType.LAZY;
 
 @Entity
@@ -32,6 +35,8 @@ public class Post extends BaseTimeEntity {
     @Column(nullable = false)
     private boolean deleted = false;
 
+    @OneToMany(mappedBy = "post", fetch = LAZY)
+    private List<Comment> comments;
 
 
     @Builder // 빌더 패턴 클래스 생성, 생성자에 포함된 필드만 포함
