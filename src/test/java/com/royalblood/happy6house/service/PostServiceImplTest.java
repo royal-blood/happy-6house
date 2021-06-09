@@ -78,6 +78,7 @@ class PostServiceImplTest {
 
         Long postId = 10L;
         ReflectionTestUtils.setField(post, "id", postId);
+        ReflectionTestUtils.setField(post, "comments", new ArrayList<>());
 
         given(postRepository.findById(postId)).willReturn(Optional.of(post));
 
@@ -105,6 +106,8 @@ class PostServiceImplTest {
             ReflectionTestUtils.setField(post, "id", i);
             ReflectionTestUtils.setField(post, "createdDate", LocalDateTime.now());
             ReflectionTestUtils.setField(post, "modifiedDate", LocalDateTime.now());
+            ReflectionTestUtils.setField(post, "comments", new ArrayList<>());
+
             posts.add(post);
         }
         long offset = 0;
@@ -142,6 +145,7 @@ class PostServiceImplTest {
                 .build();
         Long postId = 10L;
         ReflectionTestUtils.setField(post, "id", postId);
+        ReflectionTestUtils.setField(post, "comments", new ArrayList<>());
 
         String newTitle = "It's new Title";
         String newContent = "It's new content";
