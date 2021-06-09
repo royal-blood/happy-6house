@@ -36,7 +36,7 @@ public class Post extends BaseTimeEntity {
     private boolean deleted = false;
 
     @OneToMany(mappedBy = "post", fetch = LAZY)
-    private List<Comment> comments = new ArrayList<>();
+    private List<Comment> comments;
 
 
     @Builder // 빌더 패턴 클래스 생성, 생성자에 포함된 필드만 포함
